@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Common SSO
- * Description: Enables LinkedIn and Google SSO with WooCommerce and Contact Form 7 session support.
+ * Description: Enables LinkedIn and Google SSO with WooCommerce and Contact Form  support.
  * Version: 1.0.0
  * Author: Commonwealth Creative
  */
