@@ -33,3 +33,26 @@ add_action('rest_api_init', function () {
         'permission_callback' => '__return_true'
     ]);
 });
+
+// ✅ NEW: Google callback route for REST-based OAuth handling
+add_action('rest_api_init', function () {
+    register_rest_route('common-sso/v1', '/google/callback', [
+        'methods'  => 'GET',
+        'callback' => 'common_sso_handle_google_rest_callback',
+        'permission_callback' => '__return_true',
+    ]);
+});
+
+function common_sso_handle_google_rest_callback(WP_REST_Request $request) {
+    $code  = $request->get_param('code');
+    $state = $request->get_param('state');
+
+    if (!$code || !$state) {
+        return new WP_REST_Response(['error' => 'Missing code or state'], 400);
+    }
+
+    // Delegate to main handler
+    $redirect = common_sso_handle_google_callback($code, $state);
+
+    return new WP_REST_Response(['redirect' => $redirect]);
+}

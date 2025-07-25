@@ -9,15 +9,24 @@
 define('COMMON_SSO_DIR', plugin_dir_path(__FILE__));
 define('COMMON_SSO_URL', plugin_dir_url(__FILE__));
 
-$opts = get_option('common_sso_settings') ?: [];
+add_action('plugins_loaded', function () {
+    require_once COMMON_SSO_DIR . 'includes/crypto.php'; // make sure decrypt is available
+    $opts = get_option('common_sso_settings') ?: [];
 
-define('COMMON_SSO_LINKEDIN_CLIENT_ID', $opts['linkedin_client_id'] ?? '');
-define('COMMON_SSO_LINKEDIN_CLIENT_SECRET', $opts['linkedin_client_secret'] ?? '');
-define('COMMON_SSO_LINKEDIN_REDIRECT_URI', wp_login_url('?common_sso=1&provider=linkedin'));
+    define('COMMON_SSO_LINKEDIN_CLIENT_ID', $opts['linkedin_client_id'] ?? '');
+define('COMMON_SSO_LINKEDIN_CLIENT_SECRET', isset($opts['linkedin_client_secret']) ? common_sso_decrypt($opts['linkedin_client_secret'])
+    : ''
+);
 
-define('COMMON_SSO_GOOGLE_CLIENT_ID', $opts['google_client_id'] ?? '');
-define('COMMON_SSO_GOOGLE_CLIENT_SECRET', $opts['google_client_secret'] ?? '');
-define('COMMON_SSO_GOOGLE_REDIRECT_URI', wp_login_url('?common_sso=1&provider=google'));
+    define('COMMON_SSO_LINKEDIN_REDIRECT_URI', site_url('/?common_sso=1&provider=linkedin'));
+
+    define('COMMON_SSO_GOOGLE_CLIENT_ID', $opts['google_client_id'] ?? '');
+    define('COMMON_SSO_GOOGLE_CLIENT_SECRET', isset($opts['google_client_secret']) ? common_sso_decrypt($opts['google_client_secret']) : '');
+    define('COMMON_SSO_GOOGLE_REDIRECT_URI', site_url('/wp-json/common-sso/v1/google/callback'));
+});
+
+
+
 
 require_once COMMON_SSO_DIR . 'includes/oauth-handler.php';
 require_once COMMON_SSO_DIR . 'includes/oauth-linkedin.php';
@@ -240,7 +249,7 @@ add_action('template_redirect', function () {
 
     global $post;
     if (is_a($post, 'WP_Post') && has_shortcode($post->post_content, 'common_sso_login')) {
-        wp_redirect(home_url('/my-account/'));
+        wp_redirect(home_url('/workbook-form/'));
         exit;
     }
 });
