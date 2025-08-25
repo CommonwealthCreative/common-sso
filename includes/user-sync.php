@@ -61,7 +61,7 @@ function common_sso_login_or_register_user($email, $name, $provider) {
         <p>Thanks for diving into the Brand Strategy Workbook—taking the time to get clear on your brand is a powerful first step.</p>
         <p>We’ll be in touch soon to explore how we can support you further and help bring your strategy to life.</p>
         <p>In the meantime, if you’d like your own copy of the workbook, it’s available here:</p>
-        <p>👉 <a href="https://thecommonwealthcreative.com/shop/">Get the Workbook</a></p>
+        <p>👉 <a href="https://thecommonwealthcreative.com/shop/downloads/brand-strategy-workbook/">Get the Workbook</a></p>
         <p>Thank you again,<br><strong>Matthew Thomas Small</strong><br>Founder &amp; CEO</p>
         <p>804-424-1348 // <a href="mailto:hi@thecommonwealthcreative.com">hi@thecommonwealthcreative.com</a></p>
         <p><a href="https://cal.com/hello.mattsmall/introduction-with-matt-small-commonwealth-creative">Schedule An Introduction</a></p>
